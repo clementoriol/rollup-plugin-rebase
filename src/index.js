@@ -10,8 +10,9 @@ import postcssSmartAsset from "postcss-smart-asset"
 import postcssSugarSS from "sugarss"
 import { createFilter } from "@rollup/pluginutils"
 import { getHash } from "asset-hash"
+import pathCompleteExtName from "path-complete-extname"
 
-const scriptExtensions = /^\.(json|mjs|js|jsx|ts|tsx)$/
+const scriptExtensions = /\.(json|mjs|js|jsx|ts|tsx)$/
 
 const styleParser = {
   ".pcss": null,
@@ -112,14 +113,14 @@ export default function rebase(options = {}) {
       // We do not process files which do not have a file extensions,
       // cause all assets typically have one. By returning `null` we delegate
       // the resolver to other plugins.
-      let fileExt = path.extname(importee)
+      let fileExt = pathCompleteExtName(importee)
       if (fileExt === "" || scriptExtensions.test(fileExt)) {
         return null
       }
 
       // Handle style extension rename - outputting SugarSS is not possible.
-      if (fileExt === ".sss") {
-        fileExt = ".pcss"
+      if (path.extname(importee) === ".sss") {
+        fileExt = fileExt.replace(/\.sss$/, ".pcss")
       }
 
       // Resolve full file path and let this run against the

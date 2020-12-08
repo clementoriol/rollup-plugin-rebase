@@ -50,6 +50,7 @@
     "asset-hash": "^3.0.8",
     "core-js": "^3.7.0",
     "fs-extra": "^9.0.1",
+    "path-complete-extname": "^1.0.0",
     "postcss": "^8.1.7",
     "postcss-import": "^13.0.0",
     "postcss-sass": "^0.4.4",
